@@ -2,6 +2,7 @@ package com.rockeseat.nlw.journey.planner.trip.service;
 
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
+import com.rockeseat.nlw.journey.planner.trip.exception.TripInvalidStartDateException;
 import com.rockeseat.nlw.journey.planner.trip.exception.TripNotFoundException;
 import com.rockeseat.nlw.journey.planner.trip.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class TripService {
 
   public Trip registerTrip(TripRequestPayload payload) {
     Trip trip = new Trip(payload);
+
+    if (trip.getStartsAt().isAfter(trip.getEndsAt()))
+      throw new TripInvalidStartDateException();
 
     return this.tripRepository.save(trip);
   }

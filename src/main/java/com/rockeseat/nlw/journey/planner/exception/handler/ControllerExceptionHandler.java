@@ -2,6 +2,7 @@ package com.rockeseat.nlw.journey.planner.exception.handler;
 
 import com.rockeseat.nlw.journey.planner.exception.dto.ErrorMessage;
 import com.rockeseat.nlw.journey.planner.participant.exception.ParticipantNotFoundException;
+import com.rockeseat.nlw.journey.planner.trip.exception.TripInvalidStartDateException;
 import com.rockeseat.nlw.journey.planner.trip.exception.TripNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,15 @@ public class ControllerExceptionHandler {
 
     return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
   }
+
+
+  @ExceptionHandler(TripInvalidStartDateException.class)
+  public ResponseEntity<ErrorMessage> handleTripInvalidStartDateException(TripInvalidStartDateException exception) {
+    var errors = new ErrorMessage(exception.getMessage(), "start_at");
+
+    return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
 
   @ExceptionHandler({TripNotFoundException.class, ParticipantNotFoundException.class})
   public ResponseEntity<?> handleNotFoundException(RuntimeException notFoundException) {
