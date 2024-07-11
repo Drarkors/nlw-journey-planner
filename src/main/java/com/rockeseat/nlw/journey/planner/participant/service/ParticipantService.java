@@ -1,7 +1,6 @@
 package com.rockeseat.nlw.journey.planner.participant.service;
 
 import com.rockeseat.nlw.journey.planner.participant.Participant;
-import com.rockeseat.nlw.journey.planner.participant.dtos.ParticipantCreateResponse;
 import com.rockeseat.nlw.journey.planner.participant.dtos.ParticipantData;
 import com.rockeseat.nlw.journey.planner.participant.dtos.ParticipantRequestPayload;
 import com.rockeseat.nlw.journey.planner.participant.exception.ParticipantNotFoundException;
@@ -39,7 +38,7 @@ public class ParticipantService {
     participants.forEach(participant -> log.info("Participant: {}", participant.getId()));
   }
 
-  public ParticipantCreateResponse registerParticipantToEvent(String email, Trip trip) {
+  public Participant registerParticipantToEvent(String email, Trip trip) {
     var participant = new Participant(email, trip);
 
     this.repository.save(participant);
@@ -47,7 +46,7 @@ public class ParticipantService {
     if (trip.getIsConfirmed())
       triggerConfirmationEmailToParticipant(email, trip);
 
-    return new ParticipantCreateResponse(participant.getId());
+    return participant;
   }
 
   public void triggerConfirmationEmailToParticipants(UUID tripId) {

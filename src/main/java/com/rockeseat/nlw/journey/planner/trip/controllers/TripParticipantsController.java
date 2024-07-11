@@ -31,9 +31,9 @@ public class TripParticipantsController {
   public ResponseEntity<ParticipantCreateResponse> inviteParticipant(@PathVariable UUID id, @RequestBody ParticipantRequestPayload payload) {
     var trip = this.tripService.geTripFromId(id);
 
-    var response = this.participantService.registerParticipantToEvent(payload.email(), trip);
+    var participant = this.participantService.registerParticipantToEvent(payload.email(), trip);
 
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(new ParticipantCreateResponse(participant.getId()));
   }
 
 
