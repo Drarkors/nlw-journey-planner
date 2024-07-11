@@ -1,4 +1,4 @@
-package com.rockeseat.nlw.journey.planner.activity;
+package com.rockeseat.nlw.journey.planner.activity.dtos;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

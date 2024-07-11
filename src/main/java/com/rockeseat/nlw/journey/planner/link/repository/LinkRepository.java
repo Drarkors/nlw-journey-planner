@@ -1,5 +1,6 @@
-package com.rockeseat.nlw.journey.planner.link;
+package com.rockeseat.nlw.journey.planner.link.repository;
 
+import com.rockeseat.nlw.journey.planner.link.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

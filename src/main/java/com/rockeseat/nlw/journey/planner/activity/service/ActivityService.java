@@ -1,5 +1,10 @@
-package com.rockeseat.nlw.journey.planner.activity;
+package com.rockeseat.nlw.journey.planner.activity.service;
 
+import com.rockeseat.nlw.journey.planner.activity.Activity;
+import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityCreateResponse;
+import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityData;
+import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityRequestPayload;
+import com.rockeseat.nlw.journey.planner.activity.repository.ActivityRepository;
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

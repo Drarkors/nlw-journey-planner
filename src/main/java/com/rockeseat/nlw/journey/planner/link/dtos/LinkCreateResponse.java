@@ -1,4 +1,4 @@
-package com.rockeseat.nlw.journey.planner.link;
+package com.rockeseat.nlw.journey.planner.link.dtos;
 
 import java.util.UUID;
 
