@@ -1,4 +1,4 @@
-package com.rockeseat.nlw.journey.planner.trip.exception;
+package com.rockeseat.nlw.journey.planner.trip.exceptions;
 
 public class TripInvalidStartDateException extends RuntimeException {
   public TripInvalidStartDateException() {

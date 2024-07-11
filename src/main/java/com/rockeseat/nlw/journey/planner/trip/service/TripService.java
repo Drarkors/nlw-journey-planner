@@ -2,8 +2,8 @@ package com.rockeseat.nlw.journey.planner.trip.service;
 
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
-import com.rockeseat.nlw.journey.planner.trip.exception.TripInvalidStartDateException;
-import com.rockeseat.nlw.journey.planner.trip.exception.TripNotFoundException;
+import com.rockeseat.nlw.journey.planner.trip.exceptions.TripInvalidStartDateException;
+import com.rockeseat.nlw.journey.planner.trip.exceptions.TripNotFoundException;
 import com.rockeseat.nlw.journey.planner.trip.repository.TripRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

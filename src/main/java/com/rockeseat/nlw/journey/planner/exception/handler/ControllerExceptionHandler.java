@@ -1,9 +1,10 @@
 package com.rockeseat.nlw.journey.planner.exception.handler;
 
+import com.rockeseat.nlw.journey.planner.activity.exception.InvalidActivityDateException;
 import com.rockeseat.nlw.journey.planner.exception.dto.ErrorMessage;
 import com.rockeseat.nlw.journey.planner.participant.exception.ParticipantNotFoundException;
-import com.rockeseat.nlw.journey.planner.trip.exception.TripInvalidStartDateException;
-import com.rockeseat.nlw.journey.planner.trip.exception.TripNotFoundException;
+import com.rockeseat.nlw.journey.planner.trip.exceptions.TripInvalidStartDateException;
+import com.rockeseat.nlw.journey.planner.trip.exceptions.TripNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -45,6 +46,13 @@ public class ControllerExceptionHandler {
   @ExceptionHandler(TripInvalidStartDateException.class)
   public ResponseEntity<ErrorMessage> handleTripInvalidStartDateException(TripInvalidStartDateException exception) {
     var errors = new ErrorMessage(exception.getMessage(), "start_at");
+
+    return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
+  }
+
+  @ExceptionHandler(InvalidActivityDateException.class)
+  public ResponseEntity<ErrorMessage> handleInvalidActivityDateException(InvalidActivityDateException exception) {
+    var errors = new ErrorMessage(exception.getMessage(), "occurs_at");
 
     return new ResponseEntity<>(errors, HttpStatus.UNPROCESSABLE_ENTITY);
   }
