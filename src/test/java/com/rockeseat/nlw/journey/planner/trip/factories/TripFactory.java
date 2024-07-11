@@ -1,4 +1,4 @@
-package com.rockeseat.nlw.journey.planner.trip.factory;
+package com.rockeseat.nlw.journey.planner.trip.factories;
 
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
@@ -22,5 +22,5 @@ public class TripFactory {
   public static Trip makeFromRequest(TripRequestPayload data) {
     return new Trip(data);
   }
-  
+
 }

@@ -1,4 +1,4 @@
-package com.rockeseat.nlw.journey.planner.trip.factory;
+package com.rockeseat.nlw.journey.planner.trip.factories;
 
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
 

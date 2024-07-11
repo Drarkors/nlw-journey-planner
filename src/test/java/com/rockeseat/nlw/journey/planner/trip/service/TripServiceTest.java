@@ -4,8 +4,8 @@ import com.rockeseat.nlw.journey.planner.participant.service.ParticipantService;
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import com.rockeseat.nlw.journey.planner.trip.exceptions.TripInvalidStartDateException;
 import com.rockeseat.nlw.journey.planner.trip.exceptions.TripNotFoundException;
-import com.rockeseat.nlw.journey.planner.trip.factory.TripFactory;
-import com.rockeseat.nlw.journey.planner.trip.factory.TripRequestPayloadFactory;
+import com.rockeseat.nlw.journey.planner.trip.factories.TripFactory;
+import com.rockeseat.nlw.journey.planner.trip.factories.TripRequestPayloadFactory;
 import com.rockeseat.nlw.journey.planner.trip.repository.TripRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TripServiceTest {
-  
+
   @Mock
   private TripRepository tripRepository;
 
