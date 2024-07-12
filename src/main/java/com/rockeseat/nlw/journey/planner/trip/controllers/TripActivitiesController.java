@@ -33,7 +33,7 @@ public class TripActivitiesController {
 
     var response = this.activityService.registerActivity(payload, trip);
 
-    return ResponseEntity.ok(response);
+    return ResponseEntity.ok(new ActivityCreateResponse(response.getId()));
   }
 
   @GetMapping("/{id}/activities")

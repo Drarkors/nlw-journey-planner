@@ -31,7 +31,7 @@ public class TripLinksController {
 
     var link = this.linkService.registerLink(payload, trip);
 
-    return ResponseEntity.ok(link);
+    return ResponseEntity.ok(new LinkCreateResponse(link.getId()));
   }
 
   @GetMapping("/{id}/links")
