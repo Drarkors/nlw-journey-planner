@@ -1,7 +1,6 @@
 package com.rockeseat.nlw.journey.planner.link.service;
 
 import com.rockeseat.nlw.journey.planner.link.Link;
-import com.rockeseat.nlw.journey.planner.link.dtos.LinkCreateResponse;
 import com.rockeseat.nlw.journey.planner.link.dtos.LinkData;
 import com.rockeseat.nlw.journey.planner.link.dtos.LinkRequestPayload;
 import com.rockeseat.nlw.journey.planner.link.repository.LinkRepository;
@@ -18,12 +17,10 @@ public class LinkService {
   @Autowired
   private LinkRepository repository;
 
-  public LinkCreateResponse registerLink(LinkRequestPayload payload, Trip trip) {
+  public Link registerLink(LinkRequestPayload payload, Trip trip) {
     var link = new Link(payload.title(), payload.url(), trip);
-
-    this.repository.save(link);
-
-    return new LinkCreateResponse(link.getId());
+    
+    return this.repository.save(link);
   }
 
   public List<LinkData> getAllParticipantsFromTripId(UUID tripId) {
