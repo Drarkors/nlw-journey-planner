@@ -15,6 +15,15 @@ public class TripRequestPayloadFactory {
         "Owner");
   }
 
+  public static TripRequestPayload make(String destination, String startsAt, String endsAt) {
+    return new TripRequestPayload(destination,
+        startsAt,
+        endsAt,
+        new ArrayList<>(),
+        "owner@mail.com",
+        "Owner");
+  }
+
   public static TripRequestPayload makeWithInvalidStartDate() {
     return new TripRequestPayload("Mocked destination",
         "2024-06-28T21:51:54.734Z",

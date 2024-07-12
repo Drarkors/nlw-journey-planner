@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -91,22 +92,25 @@ public class TripServiceTest {
 
   @Test
   void updateTrip_shouldUpdateATrip() {
-    var payload = TripRequestPayloadFactory.make();
+    var payload = TripRequestPayloadFactory.make(
+        "New destination",
+        LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME),
+        LocalDateTime.now().plusDays(2L).format(DateTimeFormatter.ISO_DATE_TIME)
+    );
+
     var expectedId = UUID.randomUUID();
     var expected = TripFactory.make(expectedId);
 
     when(tripRepository.findById(eq(expectedId))).thenReturn(Optional.of(expected));
-    when(tripRepository.save(eq(expected))).thenAnswer((t) -> {
-      expected.setDestination("New destination");
-      expected.setStartsAt(LocalDateTime.now());
-      expected.setEndsAt(LocalDateTime.now().plusDays(2L));
-      return expected;
-    });
+    when(tripRepository.save(eq(expected))).thenAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
 
     var response = this.tripService.updateTrip(expectedId, payload);
 
     assertEquals(expectedId, response.getId());
-    assertEquals(expected, response);
+
+    assertEquals(payload.destination(), response.getDestination());
+    assertEquals(payload.starts_at(), response.getStartsAt().format(DateTimeFormatter.ISO_DATE_TIME));
+    assertEquals(payload.ends_at(), response.getEndsAt().format(DateTimeFormatter.ISO_DATE_TIME));
 
     verify(this.tripRepository, times(1)).findById(eq(expectedId));
     verify(this.tripRepository, times(1)).save(any(Trip.class));
@@ -127,20 +131,16 @@ public class TripServiceTest {
 
   @Test
   void confirmTrip_shouldUpdateATrip() {
-    var payload = TripRequestPayloadFactory.make();
     var expectedId = UUID.randomUUID();
     var expected = TripFactory.make(expectedId);
 
     when(tripRepository.findById(eq(expectedId))).thenReturn(Optional.of(expected));
-    when(tripRepository.save(eq(expected))).thenAnswer((t) -> {
-      expected.setIsConfirmed(true);
-      return expected;
-    });
+    when(tripRepository.save(eq(expected))).thenAnswer((invocation) -> invocation.getArgument(0));
 
     var response = this.tripService.confirmTrip(expectedId);
 
     assertEquals(expectedId, response.getId());
-    assertEquals(expected, response);
+    assertEquals(true, response.getIsConfirmed());
 
     verify(this.tripRepository, times(1)).findById(eq(expectedId));
     verify(this.tripRepository, times(1)).save(any(Trip.class));
@@ -157,6 +157,5 @@ public class TripServiceTest {
     verify(this.tripRepository, times(1)).findById(eq(expectedId));
     verify(this.tripRepository, times(0)).save(any(Trip.class));
   }
-
-
+  
 }
