@@ -4,7 +4,8 @@
 
 ---
 
-Aplicação desenvolvida durante a NLW Journey, utilizando de Java, Maven, SpringBoot, SpringJPA, Spring Validation e Flyway.
+Aplicação desenvolvida durante a NLW Journey, utilizando de Java, Maven, SpringBoot, SpringJPA, Spring Validation e
+Flyway.
 Utilizando do H2 como banco em memória para facilitar o desenvolvimento.
 
 #### 🛠️ Tecnologias
@@ -28,3 +29,20 @@ $ mvn clean install -U
 ```
 
 Depois, você já pode executar a aplicação.
+
+---
+
+### 🧪 Testes mutáveis
+
+Diferente da suíte do JUnit padrão, os testes mutáveis utilizam do PITest,
+sendo necessário rodar um dos comandos abaixo para executa-los:
+
+```bash
+$ mvn test-compile org.pitest:pitest-maven:mutationCoverage
+```
+
+Caso já tenha rodado uma vez você pode usar da flag de `withHistory`:
+
+```bash
+$ mvn -DwithHistory test-compile org.pitest:pitest-maven:mutationCoverage
+```
