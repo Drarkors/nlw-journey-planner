@@ -1,7 +1,6 @@
 package com.rockeseat.nlw.journey.planner.activity.service;
 
 import com.rockeseat.nlw.journey.planner.activity.Activity;
-import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityCreateResponse;
 import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityData;
 import com.rockeseat.nlw.journey.planner.activity.dtos.ActivityRequestPayload;
 import com.rockeseat.nlw.journey.planner.activity.exception.InvalidActivityDateException;
@@ -19,21 +18,19 @@ public class ActivityService {
   @Autowired
   private ActivityRepository repository;
 
-  public ActivityCreateResponse registerActivity(ActivityRequestPayload payload, Trip trip) {
+  public Activity registerActivity(ActivityRequestPayload payload, Trip trip) {
     var activity = new Activity(payload.title(), payload.occurs_at(), trip);
 
-    var isActivityOccurAtValid = activity.getOccursAt().isBefore(trip.getEndsAt()) &&
+    var isActivityOccurAtValid = (activity.getOccursAt().isBefore(trip.getEndsAt()) || activity.getOccursAt().isEqual(trip.getEndsAt())) &&
         (activity.getOccursAt().isEqual(trip.getStartsAt()) || activity.getOccursAt().isAfter(trip.getStartsAt()));
 
     if (!isActivityOccurAtValid)
       throw new InvalidActivityDateException();
 
-    this.repository.save(activity);
-
-    return new ActivityCreateResponse(activity.getId());
+    return this.repository.save(activity);
   }
 
-  public List<ActivityData> getAllParticipantsFromTripId(UUID tripId) {
+  public List<ActivityData> getAllActivitiesFromTripId(UUID tripId) {
     return this.repository.findByTripId(tripId).stream().map(activity ->
         new ActivityData(activity.getId(), activity.getTitle(), activity.getOccursAt())
     ).toList();

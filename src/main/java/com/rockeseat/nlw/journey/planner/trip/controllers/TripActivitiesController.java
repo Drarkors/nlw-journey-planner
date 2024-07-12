@@ -40,7 +40,7 @@ public class TripActivitiesController {
   public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID id) {
     var trip = this.tripService.geTripFromId(id);
 
-    var activities = this.activityService.getAllParticipantsFromTripId(trip.getId());
+    var activities = this.activityService.getAllActivitiesFromTripId(trip.getId());
 
     return ResponseEntity.ok(activities);
   }
