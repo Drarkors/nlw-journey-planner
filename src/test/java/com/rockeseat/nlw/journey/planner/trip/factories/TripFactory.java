@@ -15,10 +15,10 @@ public class TripFactory {
   public static final LocalDateTime DEFAULT_TRIP_STARTS_AT = LocalDateTime.now();
   public static final LocalDateTime DEFAULT_TRIP_ENDS_AT = LocalDateTime.now().plusDays(7L);
 
-  private final TripRepository tripRepository;
+  private final TripRepository repository;
 
-  public TripFactory(TripRepository tripRepository) {
-    this.tripRepository = tripRepository;
+  public TripFactory(TripRepository repository) {
+    this.repository = repository;
   }
 
   public static Trip fake(UUID id) {
@@ -47,7 +47,7 @@ public class TripFactory {
         .build();
 
 
-    return this.tripRepository.save(trip);
+    return this.repository.save(trip);
   }
 
 }
