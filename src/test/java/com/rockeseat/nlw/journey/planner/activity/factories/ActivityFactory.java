@@ -10,7 +10,8 @@ import java.util.List;
 import static com.rockeseat.nlw.journey.planner.trip.factories.TripFactory.DEFAULT_TRIP_STARTS_AT;
 
 public class ActivityFactory {
-  public static List<Activity> makeMany(Trip trip) {
+
+  public static List<Activity> fakeMany(Trip trip) {
     var activities = new ArrayList<Activity>();
     activities.add(new Activity("Title 1",
         DEFAULT_TRIP_STARTS_AT.format(DateTimeFormatter.ISO_DATE_TIME), trip));
@@ -19,4 +20,5 @@ public class ActivityFactory {
 
     return activities;
   }
+
 }

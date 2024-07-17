@@ -50,7 +50,7 @@ public class ActivityServiceTest {
   @MethodSource("shouldRegisterActivitySource")
   void registerActivity_shouldRegisterActivityToEvent(String occursAt) {
     var trip = TripFactory.fake(UUID.randomUUID());
-    var payload = ActivityRequestPayloadFactory.make(occursAt);
+    var payload = ActivityRequestPayloadFactory.fake(occursAt);
 
     when(this.repository.save(any(Activity.class))).thenAnswer((invocation -> invocation.getArgument(0)));
 
@@ -65,18 +65,18 @@ public class ActivityServiceTest {
     var trip = TripFactory.fake(UUID.randomUUID());
 
     var beforeStartsAt = DEFAULT_TRIP_STARTS_AT.minusDays(2L).format(DateTimeFormatter.ISO_DATE_TIME);
-    var startsAtPayload = ActivityRequestPayloadFactory.make(beforeStartsAt);
+    var startsAtPayload = ActivityRequestPayloadFactory.fake(beforeStartsAt);
     assertThrows(InvalidActivityDateException.class, () -> this.service.registerActivity(startsAtPayload, trip));
 
     var afterEndsAt = DEFAULT_TRIP_ENDS_AT.plusDays(2L).format(DateTimeFormatter.ISO_DATE_TIME);
-    var endsAtPayload = ActivityRequestPayloadFactory.make(afterEndsAt);
+    var endsAtPayload = ActivityRequestPayloadFactory.fake(afterEndsAt);
     assertThrows(InvalidActivityDateException.class, () -> this.service.registerActivity(endsAtPayload, trip));
   }
 
   @Test
   void getAllActivitiesFromTripId_shouldReturnActivities() {
     var trip = TripFactory.fake(UUID.randomUUID());
-    var expectedActivies = ActivityFactory.makeMany(trip);
+    var expectedActivies = ActivityFactory.fakeMany(trip);
 
     when(this.repository.findByTripId(eq(trip.getId()))).thenReturn(expectedActivies);
 
@@ -84,7 +84,8 @@ public class ActivityServiceTest {
 
     assertTrue(IntStream.range(0, expectedActivies.size()).allMatch(i ->
         expectedActivies.get(i).getTitle().equals(activities.get(i).title())
-            && expectedActivies.get(i).getOccursAt().equals(activities.get(i).occurs_at())));
+            && expectedActivies.get(i).getOccursAt()
+            .format(DateTimeFormatter.ISO_DATE_TIME).equals(activities.get(i).occurs_at())));
   }
 
 }
