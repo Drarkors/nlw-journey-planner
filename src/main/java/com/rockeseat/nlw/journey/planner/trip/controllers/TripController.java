@@ -3,6 +3,7 @@ package com.rockeseat.nlw.journey.planner.trip.controllers;
 import com.rockeseat.nlw.journey.planner.participant.service.ParticipantService;
 import com.rockeseat.nlw.journey.planner.trip.Trip;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripCreateResponse;
+import com.rockeseat.nlw.journey.planner.trip.dtos.TripData;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
 import com.rockeseat.nlw.journey.planner.trip.service.TripService;
 import jakarta.validation.Valid;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @RestController
@@ -39,8 +41,18 @@ public class TripController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Trip> getTripDetails(@PathVariable UUID id) {
-    return ResponseEntity.ok(this.tripService.geTripFromId(id));
+  public ResponseEntity<TripData> getTripDetails(@PathVariable UUID id) {
+    var trip = this.tripService.geTripFromId(id);
+
+    return ResponseEntity.ok(TripData.builder()
+        .id(trip.getId())
+        .destination(trip.getDestination())
+        .starts_at(trip.getStartsAt().format(DateTimeFormatter.ISO_DATE_TIME))
+        .ends_at(trip.getEndsAt().format(DateTimeFormatter.ISO_DATE_TIME))
+        .is_confirmed(trip.getIsConfirmed())
+        .owner_name(trip.getOwnerName())
+        .owner_email(trip.getOwnerEmail())
+        .build());
   }
 
   @PutMapping("/{id}")
