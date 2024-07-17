@@ -45,7 +45,7 @@ public class ParticipantServiceTest {
   @ParameterizedTest
   @ValueSource(strings = {"participant1@mail.com", "participant2@mail.com;participant3@mail.com"})
   void registerParticipantsToEvent_shouldRegisterParticipantsToEvent(String emails) {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
 
     var participantsEmail = emails.split(";");
 
@@ -65,7 +65,7 @@ public class ParticipantServiceTest {
   @ParameterizedTest
   @ValueSource(booleans = {false, true})
   void registerParticipantToEvent_shouldRegisterAParticipantToEvent(boolean isConfirmed) {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
     trip.setIsConfirmed(isConfirmed);
 
     var payload = ParticipantRequestPayloadFactory.make();
@@ -80,7 +80,7 @@ public class ParticipantServiceTest {
 
   @Test
   void confirmParticipant_shouldConfirmAParticipant() {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
     var payload = ParticipantRequestPayloadFactory.make();
 
     var expectedId = UUID.randomUUID();
@@ -114,7 +114,7 @@ public class ParticipantServiceTest {
 
   @Test
   void getAllParticipantsFromTrip_shouldFindAllParticipantFromEvent() {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
 
     var expectedParticipants = ParticipantFactory.makeMany(trip);
     when(repository.findByTripId(eq(trip.getId()))).thenReturn(expectedParticipants);

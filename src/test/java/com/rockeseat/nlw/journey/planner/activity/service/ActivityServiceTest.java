@@ -49,7 +49,7 @@ public class ActivityServiceTest {
   @ParameterizedTest
   @MethodSource("shouldRegisterActivitySource")
   void registerActivity_shouldRegisterActivityToEvent(String occursAt) {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
     var payload = ActivityRequestPayloadFactory.make(occursAt);
 
     when(this.repository.save(any(Activity.class))).thenAnswer((invocation -> invocation.getArgument(0)));
@@ -62,7 +62,7 @@ public class ActivityServiceTest {
 
   @Test
   void registerActivity_shouldThrowInvalidActivityDateException() {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
 
     var beforeStartsAt = DEFAULT_TRIP_STARTS_AT.minusDays(2L).format(DateTimeFormatter.ISO_DATE_TIME);
     var startsAtPayload = ActivityRequestPayloadFactory.make(beforeStartsAt);
@@ -75,7 +75,7 @@ public class ActivityServiceTest {
 
   @Test
   void getAllActivitiesFromTripId_shouldReturnActivities() {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
     var expectedActivies = ActivityFactory.makeMany(trip);
 
     when(this.repository.findByTripId(eq(trip.getId()))).thenReturn(expectedActivies);

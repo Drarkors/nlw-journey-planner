@@ -41,7 +41,7 @@ public class TripServiceTest {
   @Test
   void registerTrip_shouldRegisterATrip() {
     var payload = TripRequestPayloadFactory.make();
-    var expected = TripFactory.makeFromRequest(payload);
+    var expected = TripFactory.fakeFromRequest(payload);
     var expectedId = UUID.randomUUID();
 
     when(tripRepository.save(eq(expected))).thenAnswer((t) -> {
@@ -68,7 +68,7 @@ public class TripServiceTest {
   @Test
   void getTripFromId_shouldFindAndReturnATripById() {
     var expectedId = UUID.randomUUID();
-    var expected = TripFactory.make(expectedId);
+    var expected = TripFactory.fake(expectedId);
 
     when(tripRepository.findById(eq(expectedId))).thenReturn(Optional.of(expected));
 
@@ -99,7 +99,7 @@ public class TripServiceTest {
     );
 
     var expectedId = UUID.randomUUID();
-    var expected = TripFactory.make(expectedId);
+    var expected = TripFactory.fake(expectedId);
 
     when(tripRepository.findById(eq(expectedId))).thenReturn(Optional.of(expected));
     when(tripRepository.save(eq(expected))).thenAnswer((invocationOnMock -> invocationOnMock.getArgument(0)));
@@ -132,7 +132,7 @@ public class TripServiceTest {
   @Test
   void confirmTrip_shouldUpdateATrip() {
     var expectedId = UUID.randomUUID();
-    var expected = TripFactory.make(expectedId);
+    var expected = TripFactory.fake(expectedId);
 
     when(tripRepository.findById(eq(expectedId))).thenReturn(Optional.of(expected));
     when(tripRepository.save(eq(expected))).thenAnswer((invocation) -> invocation.getArgument(0));
@@ -157,5 +157,5 @@ public class TripServiceTest {
     verify(this.tripRepository, times(1)).findById(eq(expectedId));
     verify(this.tripRepository, times(0)).save(any(Trip.class));
   }
-  
+
 }

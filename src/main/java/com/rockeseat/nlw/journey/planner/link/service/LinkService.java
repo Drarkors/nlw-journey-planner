@@ -19,13 +19,13 @@ public class LinkService {
 
   public Link registerLink(LinkRequestPayload payload, Trip trip) {
     var link = new Link(payload.title(), payload.url(), trip);
-    
+
     return this.repository.save(link);
   }
 
   public List<LinkData> getAllParticipantsFromTripId(UUID tripId) {
-    return this.repository.findByTripId(tripId).stream().map(activity ->
-        new LinkData(activity.getId(), activity.getTitle(), activity.getUrl())
+    return this.repository.findByTripId(tripId).stream().map(link ->
+        new LinkData(link.getId(), link.getTitle(), link.getUrl())
     ).toList();
   }
 

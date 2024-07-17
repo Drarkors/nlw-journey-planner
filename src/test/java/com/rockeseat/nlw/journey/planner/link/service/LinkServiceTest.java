@@ -31,9 +31,9 @@ public class LinkServiceTest {
 
   @Test
   void registerLink_shouldCreateLink() {
-    var trip = TripFactory.make(UUID.randomUUID());
+    var trip = TripFactory.fake(UUID.randomUUID());
     var expectedId = UUID.randomUUID();
-    var payload = LinkRequestPayloadFactory.make();
+    var payload = LinkRequestPayloadFactory.fake();
 
     when(this.linkRepository.save(any(Link.class))).thenAnswer((invocation) ->
         new Link(expectedId, payload.title(), payload.url(), trip));
@@ -47,8 +47,8 @@ public class LinkServiceTest {
 
   @Test
   void getAllParticipantsFromTripId_shouldReturnLinks() {
-    var trip = TripFactory.make(UUID.randomUUID());
-    var expectedLinks = LinkFactory.makeMany(trip);
+    var trip = TripFactory.fake(UUID.randomUUID());
+    var expectedLinks = LinkFactory.fakeMany(trip);
 
     when(this.linkRepository.findByTripId(eq(trip.getId()))).thenReturn(expectedLinks);
 
