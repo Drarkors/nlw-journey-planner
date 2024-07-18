@@ -69,7 +69,7 @@ public class ParticipantServiceTest {
     trip.setIsConfirmed(isConfirmed);
 
     var payload = ParticipantRequestPayloadFactory.make();
-    var expectedParticipant = ParticipantFactory.make(payload, trip);
+    var expectedParticipant = ParticipantFactory.fake(payload, trip);
 
     when(repository.save(eq(expectedParticipant))).thenReturn(expectedParticipant);
 
@@ -84,7 +84,7 @@ public class ParticipantServiceTest {
     var payload = ParticipantRequestPayloadFactory.make();
 
     var expectedId = UUID.randomUUID();
-    var expectedParticipant = ParticipantFactory.make(payload, trip);
+    var expectedParticipant = ParticipantFactory.fake(payload, trip);
     expectedParticipant.setEmail("wrong@email.com");
     expectedParticipant.setId(expectedId);
 
@@ -116,7 +116,7 @@ public class ParticipantServiceTest {
   void getAllParticipantsFromTrip_shouldFindAllParticipantFromEvent() {
     var trip = TripFactory.fake(UUID.randomUUID());
 
-    var expectedParticipants = ParticipantFactory.makeMany(trip);
+    var expectedParticipants = ParticipantFactory.fakeMany(trip);
     when(repository.findByTripId(eq(trip.getId()))).thenReturn(expectedParticipants);
 
     var participants = this.service.getAllParticipantsFromTrip(trip);

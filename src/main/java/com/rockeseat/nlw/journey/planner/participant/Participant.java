@@ -9,12 +9,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "participants")
@@ -24,7 +26,7 @@ public class Participant {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
-  @Column(name ="is_confirmed", nullable = false)
+  @Column(name = "is_confirmed", nullable = false)
   private Boolean isConfirmed;
 
   @Column(nullable = false)
@@ -34,7 +36,7 @@ public class Participant {
   private String email;
 
   @ManyToOne
-  @JoinColumn(name ="trip_id", nullable = false)
+  @JoinColumn(name = "trip_id", nullable = false)
   private Trip trip;
 
   public Participant(String email, Trip trip) {
