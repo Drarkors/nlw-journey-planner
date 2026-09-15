@@ -7,6 +7,7 @@ import com.rockeseat.nlw.journey.planner.trip.dtos.TripData;
 import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
 import com.rockeseat.nlw.journey.planner.trip.service.TripService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/trips")
+@Slf4j
 public class TripController {
 
   @Autowired
@@ -33,9 +35,13 @@ public class TripController {
 
   @PostMapping
   public ResponseEntity<TripCreateResponse> createTrip(@RequestBody @Valid TripRequestPayload payload) {
+    log.info("Request coming through trip controller");
+
     var trip = this.tripService.registerTrip(payload);
 
     this.participantService.registerParticipantsToEvent(payload.emails_to_invite(), trip);
+
+    log.info("Response from trip controller: " + ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponse(trip.getId())));
 
     return ResponseEntity.status(HttpStatus.CREATED).body(new TripCreateResponse(trip.getId()));
   }
@@ -45,14 +51,14 @@ public class TripController {
     var trip = this.tripService.geTripFromId(id);
 
     return ResponseEntity.ok(TripData.builder()
-        .id(trip.getId())
-        .destination(trip.getDestination())
-        .starts_at(trip.getStartsAt().format(DateTimeFormatter.ISO_DATE_TIME))
-        .ends_at(trip.getEndsAt().format(DateTimeFormatter.ISO_DATE_TIME))
-        .is_confirmed(trip.getIsConfirmed())
-        .owner_name(trip.getOwnerName())
-        .owner_email(trip.getOwnerEmail())
-        .build());
+      .id(trip.getId())
+      .destination(trip.getDestination())
+      .starts_at(trip.getStartsAt().format(DateTimeFormatter.ISO_DATE_TIME))
+      .ends_at(trip.getEndsAt().format(DateTimeFormatter.ISO_DATE_TIME))
+      .is_confirmed(trip.getIsConfirmed())
+      .owner_name(trip.getOwnerName())
+      .owner_email(trip.getOwnerEmail())
+      .build());
   }
 
   @PutMapping("/{id}")

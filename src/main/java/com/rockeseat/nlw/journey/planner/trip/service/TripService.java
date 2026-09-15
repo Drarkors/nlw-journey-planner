@@ -5,6 +5,7 @@ import com.rockeseat.nlw.journey.planner.trip.dtos.TripRequestPayload;
 import com.rockeseat.nlw.journey.planner.trip.exceptions.TripInvalidStartDateException;
 import com.rockeseat.nlw.journey.planner.trip.exceptions.TripNotFoundException;
 import com.rockeseat.nlw.journey.planner.trip.repository.TripRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class TripService {
 
@@ -20,6 +22,8 @@ public class TripService {
 
   public Trip registerTrip(TripRequestPayload payload) {
     Trip trip = new Trip(payload);
+
+    log.info("Request translated into Trip entity on register service as: " + trip.toString());
 
     if (trip.getStartsAt().isAfter(trip.getEndsAt()))
       throw new TripInvalidStartDateException();
